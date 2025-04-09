@@ -4,7 +4,11 @@
 */
 
 function reverseString(str) {
-  // Tu solución acá  
+  // Tu solución acá
+  const reverseString = str.split("").reverse().join("");
+  // primero lo transformo en un array de un string por celda, luego aplico la funcion reverse para invertir el orden de la ubicación de cada celda, y por ultimo
+  // vuelvo a convertir en un string dicho array
+  return reverseString;
 }
 
 /*
@@ -14,6 +18,10 @@ function reverseString(str) {
 */
 function isPalindrome(str) {
   // Tu solución acá
+  const reverseString = str.split("").reverse().join("");
+  // utilizo la misma lógica del ejercicio 1 para obtener la cadena invertida
+  return str === reverseString ? true : false;
+  // pregunto si la cadena ingresada es igual a su invertida, si es verdadero significa que es palíndromo
 }
 
 /*
@@ -31,8 +39,29 @@ function isPalindrome(str) {
 
 function closestPair(arr) {
   // Tu solución acá
-}
+  if (arr.length < 2) return null;
+  // en caso de que el array tenga 1 o ningun elemento, no hay pares posibles
 
+  arr.sort((a, b) => a - b);
+  // Ordenamos el array para poder tener las diferencias consecutivas entre si
+
+  let diferenciaMinima = Infinity;
+  let parMinimo = [];
+  // Declaramos una variable para guardar la diferencia mínima en valor absoluto y otra para almacenar el par
+
+  for (let i = 1; i < arr.length; i++) {
+    // recorremos una vez menos que la cantidad de elementos que tiene el array
+    let diferencia = Math.abs(arr[i] - arr[i - 1]);
+    // calculamos la diferencia en valor absoluto entre el elemento de la posición actual y el de la posición anterior
+    if (diferencia < diferenciaMinima) {
+      diferenciaMinima = diferencia;
+      parMinimo = [arr[i - 1], arr[i]];
+      // Si la diferencia encontrada es menor a la que había, la guardamos en la variable, al igual que el par mímimo encontrado
+    }
+  }
+
+  return parMinimo;
+}
 
 /*
   Ejercicio 4: Calculadora - Programación Orientada a Objetos
@@ -68,6 +97,52 @@ function closestPair(arr) {
 
 class Calculator {
   // Tu solución acá
+  constructor() {
+    this.ultimoResultado = 0;
+    // declaramos en el constructor, el atributo para almacenar el último resultado
+  }
+
+  add(a, b) {
+    this.ultimoResultado = a + b;
+    return this.ultimoResultado;
+    // método para sumar 2 números
+  }
+
+  subtract(a, b) {
+    this.ultimoResultado = a - b;
+    return this.ultimoResultado;
+    // método para restar 2 números
+  }
+
+  multiply(a, b) {
+    this.ultimoResultado = a * b;
+    return this.ultimoResultado;
+    // método para multiplicar 2 números
+  }
+
+  divide(a, b) {
+    if (b === 0) {
+      throw new Error("Division by zero is not allowed");
+    }
+    // Condicíon para el caso de divisiíon por cero
+    this.ultimoResultado = a / b;
+    return this.ultimoResultado;
+    // método para dividir 2 números
+  }
+  exponentiate(a, b) {
+    if (b < 0) {
+      throw new Error("Exponentiation with negative exponent is not allowed");
+    }
+    // Condicíon para el caso de exponentes negativos
+    this.ultimoResultado = Math.pow(a, b);
+    return this.ultimoResultado;
+    // método para calcular la potencia de un número
+  }
+
+  getLastResult() {
+    return this.ultimoResultado;
+    // método para acceder al último resultado que se realizó
+  }
 }
 
 module.exports = {
@@ -75,4 +150,4 @@ module.exports = {
   isPalindrome,
   reverseString,
   Calculator,
-}
+};
